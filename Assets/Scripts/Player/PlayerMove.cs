@@ -5,54 +5,71 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public class Mover : MonoBehaviour
+    [RequireComponent(typeof(Inventory))]
+    public class PlayerMove : MonoBehaviour
     {
-        [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _moveSpeed = 3f;
+        [SerializeField] private float _jumpForce = 11.2f;
 
-        private const string CommandIsRunning = "isRunning";
+        private const string CommandIsRunning = "Running";
+        private const string CommandIsGrounded = "Grounded";
+        private const string CommandHorizontal = "Horizontal";
+        private const string CommandJump = "Jump";
 
-        private SpriteRenderer _renderer;
-        private PlayerInputAction _playerInput;
-        private Rigidbody2D _rigidBody;
+        private SpriteRenderer _spriteRenderer;
         private Animator _animator;
+        private Rigidbody2D _rigidBody;
+        private Inventory _inventory;
+
+        private bool _isRunning;
+        private bool _isGrounded;
 
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _renderer = GetComponent<SpriteRenderer>();
-        
-            _playerInput = new PlayerInputAction();
-            _playerInput.Enable();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _inventory = GetComponent<Inventory>();
         }
 
         private void Update()
         {
-            Move();
+            _isRunning = Input.GetAxis(CommandHorizontal) != 0;
+
+            if (Input.GetButton(CommandHorizontal))
+                Run();
+            if (Input.GetButtonDown(CommandJump) && _isGrounded)
+                Jump();
+
+            _animator.SetBool(CommandIsRunning, _isRunning);
+            _animator.SetBool(CommandIsGrounded, _isGrounded);
+
+            Debug.Log(_inventory.CoinCount);
         }
 
-        private void Move()
+        private void Run()
         {
-            Vector2 inputVector = GetMovementVector();
-            
-            bool isRunning;
-            float minMoveSpeed = 0.1f;
-        
-            isRunning = Mathf.Abs(inputVector.x) > minMoveSpeed;
+            Vector3 direction = transform.right * Input.GetAxis(CommandHorizontal);
 
-            if (inputVector.x < 0)
-                _renderer.flipX = true;
-            else
-                _renderer.flipX = false;
-        
-            _rigidBody.MovePosition(_rigidBody.position + inputVector * (_moveSpeed * Time.fixedDeltaTime));
-        
-            _animator.SetBool(CommandIsRunning, isRunning);
+            transform.position =
+                Vector3.MoveTowards(transform.position, transform.position + direction, _moveSpeed * Time.deltaTime);
+
+            _spriteRenderer.flipX = direction.x < 0f;
         }
 
-        private Vector2 GetMovementVector()
+        private void Jump()
         {
-            return _playerInput.Player.Move.ReadValue<Vector2>();
+            _rigidBody.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
+            _animator.SetTrigger(CommandJump);
+            _isGrounded = false;
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.TryGetComponent(out Ground _))
+            {
+                _isGrounded = true;
+            }
         }
     }
 }
