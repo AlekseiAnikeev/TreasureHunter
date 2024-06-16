@@ -25,7 +25,6 @@ namespace Characters
 
         private Rigidbody2D _rigidBody;
         private Inventory _inventory;
-        private Coroutine _coroutine;
 
         private void Awake()
         {
