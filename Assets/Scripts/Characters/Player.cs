@@ -63,11 +63,6 @@ namespace Characters
 
         public void Heal(float healingRate)
         {
-            /*if (_currentHealth + healingRate <= _maxHealth)
-                _currentHealth += healingRate;
-            else
-                _currentHealth = _maxHealth;*/
-
             _currentHealth = Mathf.Clamp(_currentHealth + healingRate, _minHealth, _maxHealth);
         }
 

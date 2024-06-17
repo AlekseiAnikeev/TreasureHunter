@@ -18,8 +18,6 @@ namespace Characters
         private Animator _animator;
         private PolygonCollider2D _polygonCollider;
 
-        private float _nextAttackTime;
-
         private void Start()
         {
             _animator = GetComponent<Animator>();

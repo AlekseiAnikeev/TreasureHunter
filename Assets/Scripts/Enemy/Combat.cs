@@ -26,7 +26,7 @@ namespace Enemy
             if (_enemyAi.CanSpellUse)
             {
                 _animator.SetBool(IsRun, false);
-                
+
                 if (Player.Instance.IsAlive == false)
                     _animator.SetTrigger(IsAttack);
 
