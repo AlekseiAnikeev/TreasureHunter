@@ -15,9 +15,9 @@ namespace Characters
         private const string CommandHorizontal = "Horizontal";
         private const string CommandJump = "Jump";
 
-        public event Action OnJump;
-        public event Action OnAttack;
-        public event Action OnDie;
+        public event Action Jumped;
+        public event Action Attacked;
+        public event Action Died;
 
         public bool IsRunning { get; private set; }
         public bool IsGrounded { get; private set; }
@@ -33,33 +33,42 @@ namespace Characters
             _inventory = GetComponent<Inventory>();
 
             _currentHealth = _maxHealth;
+            CanSpellUse = true;
         }
 
         private void Update()
         {
             if (IsAlive)
-                OnDie?.Invoke();
+                Died?.Invoke();
+            else
+            {
+                IsRunning = Input.GetAxis(CommandHorizontal) != 0;
 
-            IsRunning = Input.GetAxis(CommandHorizontal) != 0;
+                if (Input.GetButton(CommandHorizontal))
+                    Run();
 
-            if (Input.GetButton(CommandHorizontal))
-                Run();
+                if (Input.GetButtonDown(CommandJump) && IsGrounded)
+                    Jump();
 
-            if (Input.GetButtonDown(CommandJump) && IsGrounded)
-                Jump();
+                if (Input.GetMouseButtonDown(0) && CanSpellUse)
+                {
+                    StartAttackCooldown();
 
-            if (Input.GetMouseButtonDown(0))
-                OnAttack?.Invoke();
+                    Attacked?.Invoke();
+                }
 
-            Debug.Log(_inventory.CoinCount);
+                //Debug.Log(_inventory.CoinCount);
+            }
         }
 
-        public void Healing(float healingRate)
+        public void Heal(float healingRate)
         {
-            if (_currentHealth + healingRate <= _maxHealth)
+            /*if (_currentHealth + healingRate <= _maxHealth)
                 _currentHealth += healingRate;
             else
-                _currentHealth = _maxHealth;
+                _currentHealth = _maxHealth;*/
+
+            _currentHealth = Mathf.Clamp(_currentHealth + healingRate, _minHealth, _maxHealth);
         }
 
         private void Run()
@@ -76,7 +85,7 @@ namespace Characters
 
             IsGrounded = false;
 
-            OnJump?.Invoke();
+            Jumped?.Invoke();
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

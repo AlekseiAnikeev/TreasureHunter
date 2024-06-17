@@ -6,7 +6,6 @@ namespace Characters
     [RequireComponent(typeof(Animator))]
     public class PlayerVisual : MonoBehaviour
     {
-        [SerializeField] private float _spellCooldown = 2f;
         [SerializeField] private float _damage;
 
         private const string IsRunning = "IsRunning";
@@ -52,18 +51,18 @@ namespace Characters
 
         private void OnEnable()
         {
-            Player.Instance.OnTakeHit += TakeHit;
-            Player.Instance.OnJump += Jump;
-            Player.Instance.OnAttack += Attack;
-            Player.Instance.OnDie += Death;
+            Player.Instance.TakeHit += TakeHit;
+            Player.Instance.Jumped += Jump;
+            Player.Instance.Attacked += Attack;
+            Player.Instance.Died += Death;
         }
 
         private void OnDisable()
         {
-            Player.Instance.OnTakeHit -= TakeHit;
-            Player.Instance.OnJump -= Jump;
-            Player.Instance.OnAttack -= Attack;
-            Player.Instance.OnDie -= Death;
+            Player.Instance.TakeHit -= TakeHit;
+            Player.Instance.Jumped -= Jump;
+            Player.Instance.Attacked -= Attack;
+            Player.Instance.Died -= Death;
         }
 
         private void TakeHit()
@@ -83,12 +82,7 @@ namespace Characters
 
         private void Attack()
         {
-            if (Time.time > _nextAttackTime)
-            {
-                _animator.SetTrigger(IsAttack);
-
-                _nextAttackTime = Time.time + _spellCooldown;
-            }
+            _animator.SetTrigger(IsAttack);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

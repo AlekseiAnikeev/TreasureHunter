@@ -4,32 +4,33 @@ using UnityEngine;
 namespace Enemy
 {
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(EnemyAI))]
     public class Combat : MonoBehaviour
     {
         [SerializeField] private int _damage;
-        [SerializeField] private float _attackRate = 2f;
 
         private const string IsAttack = "IsAttack";
         private const string IsRun = "IsRunning";
 
         private Animator _animator;
-        private float _nextAttackTime = 0f;
+        private EnemyAI _enemyAi;
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
+            _enemyAi = GetComponent<EnemyAI>();
         }
 
         public void Attack()
         {
-            if (Time.time > _nextAttackTime)
+            if (_enemyAi.CanSpellUse)
             {
                 _animator.SetBool(IsRun, false);
-
+                
                 if (Player.Instance.IsAlive == false)
                     _animator.SetTrigger(IsAttack);
 
-                _nextAttackTime = Time.time + _attackRate;
+                _enemyAi.StartAttackCooldown();
             }
         }
 

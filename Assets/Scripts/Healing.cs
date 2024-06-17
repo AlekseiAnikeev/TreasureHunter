@@ -12,7 +12,7 @@ public class Healing : MonoBehaviour
             
             Debug.Log($"Восстановлено {_health} hp");
 
-            player.Healing(_health);
+            player.Heal(_health);
         }
     }
 }

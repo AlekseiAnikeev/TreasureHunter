@@ -39,6 +39,7 @@ namespace Enemy
             _currentState = _startingState;
             Speed = _speed;
             _currentHealth = _maxHealth;
+            CanSpellUse = true;
         }
 
         private void Update()
@@ -63,15 +64,15 @@ namespace Enemy
 
         private void OnEnable()
         {
-            OnTakeHit += TakeHit;
+            base.TakeHit += TakeHitAnimation;
         }
 
         private void OnDisable()
         {
-            OnTakeHit -= TakeHit;
+            base.TakeHit -= TakeHitAnimation;
         }
 
-        private void TakeHit()
+        private void TakeHitAnimation()
         {
             _animator.SetTrigger(IsTakeHit);
         }
