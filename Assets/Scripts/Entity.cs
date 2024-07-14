@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour
+public abstract class Entity : Health
 {
-    [SerializeField] protected float _maxHealth;
     [SerializeField] private float _spellCooldown;
 
     public event Action TakeHit;
@@ -13,16 +12,11 @@ public abstract class Entity : MonoBehaviour
     public bool CanSpellUse { get; protected set; }
 
     private Coroutine _curentCoroutime;
-    protected float _currentHealth;
-    protected float _minHealth = 0f;
-    
-    public void TakeDamage(float damage)
+
+    public override void TakeDamage(float damage)
     {
+        base.TakeDamage(damage);
         TakeHit?.Invoke();
-
-        _currentHealth -= damage;
-
-        Debug.Log(_currentHealth);
     }
 
     public void DestroyObject()
@@ -31,10 +25,10 @@ public abstract class Entity : MonoBehaviour
         {
             StopCoroutine(Cooldown());
         }
-        
+
         Destroy(gameObject);
     }
-    
+
     public void StartAttackCooldown()
     {
         if (CanSpellUse)
@@ -48,7 +42,7 @@ public abstract class Entity : MonoBehaviour
     private IEnumerator Cooldown()
     {
         yield return new WaitForSecondsRealtime(_spellCooldown);
-        
+
         CanSpellUse = true;
     }
 }

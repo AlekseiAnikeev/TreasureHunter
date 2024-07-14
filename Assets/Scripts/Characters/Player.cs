@@ -57,13 +57,8 @@ namespace Characters
                     Attacked?.Invoke();
                 }
 
-                //Debug.Log(_inventory.CoinCount);
+                Debug.Log(_inventory.CoinCount);
             }
-        }
-
-        public void Heal(float healingRate)
-        {
-            _currentHealth = Mathf.Clamp(_currentHealth + healingRate, _minHealth, _maxHealth);
         }
 
         private void Run()
