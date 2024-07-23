@@ -326,6 +326,10 @@ PrefabInstance:
       propertyPath: _health
       value: 
       objectReference: {fileID: 2785514418547184481}
+    - target: {fileID: 2801455325733852197, guid: 46a7773847e0e11478d72eadf200afe9, type: 3}
+      propertyPath: _slider
+      value: 
+      objectReference: {fileID: 4721476885661929065}
     - target: {fileID: 4028526847736137270, guid: 46a7773847e0e11478d72eadf200afe9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
