@@ -1,4 +1,5 @@
 using System;
+using Ability;
 using UnityEngine;
 
 namespace Characters
@@ -11,6 +12,7 @@ namespace Characters
 
         [SerializeField] private float _moveSpeed = 3f;
         [SerializeField] private float _jumpForce = 11.2f;
+        [SerializeField] private Vampiric _vamiricAbility;
 
         private const string CommandHorizontal = "Horizontal";
         private const string CommandJump = "Jump";
@@ -56,6 +58,9 @@ namespace Characters
 
                     Attacked?.Invoke();
                 }
+
+                if (Input.GetKeyDown(KeyCode.Y))
+                    _vamiricAbility.ActivationAbility();
 
                 Debug.Log(_inventory.CoinCount);
             }
