@@ -117,7 +117,6 @@ namespace Ability
 
                 if (enemy != null && enemy.IsAlive == false)
                 {
-                    Debug.Log(enemy.gameObject.name);
                     ApplyVampiric(_healthRate * Time.deltaTime, enemy);
                 }
 

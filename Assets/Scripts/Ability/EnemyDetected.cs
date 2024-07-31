@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Ability
@@ -7,7 +8,7 @@ namespace Ability
     {
         private List<Entity> _enemy = new();
 
-        public List<Entity> Enemy => _enemy;
+        public List<Entity> Enemy => _enemy.ToList();
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

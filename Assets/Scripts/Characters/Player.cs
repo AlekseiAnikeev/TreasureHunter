@@ -28,7 +28,6 @@ namespace Characters
 
         private void Awake()
         {
-            //Instance = this;
             _rigidBody = GetComponent<Rigidbody2D>();
             _inventory = GetComponent<Inventory>();
 
@@ -60,7 +59,7 @@ namespace Characters
                 if (Input.GetKeyDown(KeyCode.Y))
                     _vamiricAbility.ActivationAbility();
 
-                //Debug.Log(_inventory.CoinCount);
+                Debug.Log(_inventory.CoinCount);
             }
         }
 
