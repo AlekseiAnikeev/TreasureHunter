@@ -4,16 +4,15 @@ using Random = UnityEngine.Random;
 
 namespace Enemy
 {
-    [RequireComponent(typeof(EnemyAI))]
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(EnemyAI), typeof(Animator))]
     public class Patrolling : MonoBehaviour
     {
+        private const string IsRun = "IsRunning";
+
         [SerializeField] private float _minPatrolDistance = 3f;
         [SerializeField] private float _maxPatrolDistance = 7f;
         [SerializeField] private float _maxPatrolTime = 2f;
 
-        private const string IsRun = "IsRunning";
-        
         public Vector3 TargetPosition { get; private set; }
         public float CurrentPatrolTime { get; private set; }
 
@@ -42,7 +41,8 @@ namespace Enemy
 
         public void Patrol()
         {
-            _animator.SetBool(IsRun, Math.Abs(transform.position.x - TargetPosition.x) > _accuracy && _enemyAI.IsRunning);
+            _animator.SetBool(IsRun,
+                Math.Abs(transform.position.x - TargetPosition.x) > _accuracy && _enemyAI.IsRunning);
 
             transform.position =
                 Vector3.MoveTowards(transform.position, TargetPosition, _enemyAI.Speed * Time.deltaTime);

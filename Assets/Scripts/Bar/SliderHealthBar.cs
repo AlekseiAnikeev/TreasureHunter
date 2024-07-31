@@ -13,7 +13,7 @@ namespace Bar
             _slider.maxValue = 1;
         }
 
-        protected override void SetHealth(float currentHealth)
+        protected override void SetBarValue(float currentHealth)
         {
             _slider.value = currentHealth / _health.MaxHealth;
         }

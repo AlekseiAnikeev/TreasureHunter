@@ -301,10 +301,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1695c232d506084ebc9cc8260c72d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthRate: 26
-  _abilityDuration: 2
+  _healthRate: 15
+  _abilityDuration: 20
   _cooldownDuration: 4
   _enemyDetected: {fileID: 381252892}
+  _player: {fileID: 636052768}
 --- !u!58 &381252894
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -400,10 +401,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 386347776732784453, guid: d674a4f8bfbb6c04f9e41b5f5d9464ce, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 636052768}
     - target: {fileID: 2613204827721136570, guid: d674a4f8bfbb6c04f9e41b5f5d9464ce, type: 3}
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 2785514418547184481, guid: d674a4f8bfbb6c04f9e41b5f5d9464ce, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 636052768}
     - target: {fileID: 3780408415867900998, guid: d674a4f8bfbb6c04f9e41b5f5d9464ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.7
@@ -444,6 +453,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4820566978041216798, guid: d674a4f8bfbb6c04f9e41b5f5d9464ce, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 636052768}
     - target: {fileID: 7820879388336818611, guid: d674a4f8bfbb6c04f9e41b5f5d9464ce, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8684,6 +8697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 22
+  _player: {fileID: 636052768}
 --- !u!60 &1628349393
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -9245,14 +9259,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 823444317060874956, guid: 399897c160c9b394e93ccdd72b9e9c47, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 636052768}
     - target: {fileID: 4267629334854002866, guid: 399897c160c9b394e93ccdd72b9e9c47, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6045222001923216836, guid: 399897c160c9b394e93ccdd72b9e9c47, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 636052768}
     - target: {fileID: 7079717675817325819, guid: 399897c160c9b394e93ccdd72b9e9c47, type: 3}
       propertyPath: m_Name
       value: Eye
       objectReference: {fileID: 0}
+    - target: {fileID: 8058637224056481943, guid: 399897c160c9b394e93ccdd72b9e9c47, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 636052768}
     - target: {fileID: 8181960569564402135, guid: 399897c160c9b394e93ccdd72b9e9c47, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.97

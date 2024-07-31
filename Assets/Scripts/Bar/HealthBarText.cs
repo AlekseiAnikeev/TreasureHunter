@@ -7,7 +7,7 @@ namespace Bar
     {
         [SerializeField] private TextMeshProUGUI _healthText;
 
-        protected override void SetHealth(float currentHealth)
+        protected override void SetBarValue(float currentHealth)
         {
             _healthText.text = $"{currentHealth}/{_health.MaxHealth}";
         }

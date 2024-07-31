@@ -8,14 +8,14 @@ namespace Bar
 
         private void OnEnable()
         {
-            _health.ValueChanged += SetHealth;
+            _health.ValueChanged += SetBarValue;
         }
 
         private void OnDisable()
         {
-            _health.ValueChanged -= SetHealth;
+            _health.ValueChanged -= SetBarValue;
         }
 
-        protected abstract void SetHealth(float currentHealth);
+        protected abstract void SetBarValue(float currentValue);
     }
 }

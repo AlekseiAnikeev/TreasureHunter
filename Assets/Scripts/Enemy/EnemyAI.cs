@@ -3,20 +3,18 @@ using UnityEngine;
 
 namespace Enemy
 {
-    [RequireComponent(typeof(Patrolling))]
-    [RequireComponent(typeof(Chasing))]
-    [RequireComponent(typeof(Combat))]
-    [RequireComponent(typeof(PolygonCollider2D))]
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Patrolling), typeof(Chasing), typeof(Combat))]
+    [RequireComponent(typeof(PolygonCollider2D), typeof(Animator))]
     public class EnemyAI : Entity
     {
+        private const string IsTakeHit = "TakeHit";
+        private const string IsIsDie = "IsDie";
+
         [SerializeField] private State _startingState;
         [SerializeField] private float _speed;
         [SerializeField] private float _chasingDistance = 4f;
         [SerializeField] private float _attackDistance = 1f;
-
-        private const string IsTakeHit = "TakeHit";
-        private const string IsIsDie = "IsDie";
+        [SerializeField] private Player _player;
 
         public float Speed { get; private set; }
         public bool IsRunning => _currentState is State.Patrol or State.Chasing;
@@ -118,7 +116,7 @@ namespace Enemy
 
         private void GetCurrentState()
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, Player.Instance.transform.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
 
             if (IsAlive)
             {

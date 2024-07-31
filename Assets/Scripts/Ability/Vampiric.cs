@@ -5,15 +5,14 @@ using UnityEngine;
 
 namespace Ability
 {
-    [RequireComponent(typeof(CircleCollider2D))]
-    [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(EnemyDetected))]
+    [RequireComponent(typeof(CircleCollider2D), typeof(SpriteRenderer), typeof(EnemyDetected))]
     public class Vampiric : MonoBehaviour
     {
         [SerializeField] private float _healthRate = 10f;
         [SerializeField] private float _abilityDuration = 6f;
         [SerializeField] private float _cooldownDuration = 6f;
         [SerializeField] private EnemyDetected _enemyDetected;
+        [SerializeField] private Player _player;
 
         private float _currentCooldownDuration;
         private float _currentAbilityDuration;
@@ -35,8 +34,7 @@ namespace Ability
             _renderer = GetComponent<SpriteRenderer>();
             _trigger = GetComponent<CircleCollider2D>();
 
-            _trigger.enabled = false;
-            _renderer.enabled = false;
+            DeactivationComponent();
         }
 
         public void ActivationAbility()
@@ -54,7 +52,7 @@ namespace Ability
             if (enemy == null)
                 return;
 
-            Player.Instance.Heal(healthToTransfer);
+            _player.Heal(healthToTransfer);
             enemy.TakeDamage(healthToTransfer);
         }
 
@@ -95,6 +93,10 @@ namespace Ability
         {
             _isAbilityActive = true;
 
+            Entity enemy = null;
+
+            float maxDistance = Mathf.Infinity;
+
             _currentAbilityDuration = _abilityDuration;
 
             while (_currentAbilityDuration > 0)
@@ -103,7 +105,20 @@ namespace Ability
 
                 foreach (var entity in _enemyDetected.Enemy)
                 {
-                    ApplyVampiric(_healthRate * Time.deltaTime, entity);
+                    float distanceToEnemy = Vector3.Distance(entity.transform.position,
+                        _player.transform.position);
+
+                    if (distanceToEnemy < maxDistance)
+                    {
+                        maxDistance = distanceToEnemy;
+                        enemy = entity;
+                    }
+                }
+
+                if (enemy != null && enemy.IsAlive == false)
+                {
+                    Debug.Log(enemy.gameObject.name);
+                    ApplyVampiric(_healthRate * Time.deltaTime, enemy);
                 }
 
                 ValueChanged?.Invoke(_currentAbilityDuration, _abilityDuration);

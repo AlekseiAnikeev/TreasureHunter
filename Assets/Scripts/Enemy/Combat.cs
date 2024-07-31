@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Enemy
 {
-    [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(EnemyAI))]
+    [RequireComponent(typeof(Animator), typeof(EnemyAI))]
     public class Combat : MonoBehaviour
     {
-        [SerializeField] private int _damage;
-
         private const string IsAttack = "IsAttack";
         private const string IsRun = "IsRunning";
+
+        [SerializeField] private int _damage;
+        [SerializeField] private Player _player;
 
         private Animator _animator;
         private EnemyAI _enemyAi;
@@ -27,7 +27,7 @@ namespace Enemy
             {
                 _animator.SetBool(IsRun, false);
 
-                if (Player.Instance.IsAlive == false)
+                if (_player.IsAlive == false)
                     _animator.SetTrigger(IsAttack);
 
                 _enemyAi.StartAttackCooldown();

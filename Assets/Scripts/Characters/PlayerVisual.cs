@@ -6,14 +6,15 @@ namespace Characters
     [RequireComponent(typeof(Animator))]
     public class PlayerVisual : MonoBehaviour
     {
-        [SerializeField] private float _damage;
-
         private const string IsRunning = "IsRunning";
         private const string IsGrounded = "IsGrounded";
         private const string IsJump = "Jump";
         private const string IsAttack = "IsAttack";
         private const string IsTakeHit = "TakeHit";
         private const string IsDie = "IsDie";
+
+        [SerializeField] private float _damage;
+        [SerializeField] private Player _player;
 
         private Animator _animator;
         private PolygonCollider2D _polygonCollider;
@@ -26,10 +27,10 @@ namespace Characters
 
         private void Update()
         {
-            _animator.SetBool(IsRunning, Player.Instance.IsRunning);
-            _animator.SetBool(IsGrounded, Player.Instance.IsGrounded);
+            _animator.SetBool(IsRunning, _player.IsRunning);
+            _animator.SetBool(IsGrounded, _player.IsGrounded);
 
-            transform.rotation = Quaternion.Euler(0, Player.Instance.Direction.x > 0f ? 0 : 180, 0);
+            transform.rotation = Quaternion.Euler(0, _player.Direction.x > 0f ? 0 : 180, 0);
         }
 
         public void PolygonColliderTurnOn()
@@ -44,23 +45,23 @@ namespace Characters
 
         public void DestroyGameObject()
         {
-            Destroy(Player.Instance.gameObject);
+            Destroy(_player.gameObject);
         }
 
         private void OnEnable()
         {
-            Player.Instance.TakeHit += TakeHit;
-            Player.Instance.Jumped += Jump;
-            Player.Instance.Attacked += Attack;
-            Player.Instance.Died += Death;
+            _player.TakeHit += TakeHit;
+            _player.Jumped += Jump;
+            _player.Attacked += Attack;
+            _player.Died += Death;
         }
 
         private void OnDisable()
         {
-            Player.Instance.TakeHit -= TakeHit;
-            Player.Instance.Jumped -= Jump;
-            Player.Instance.Attacked -= Attack;
-            Player.Instance.Died -= Death;
+            _player.TakeHit -= TakeHit;
+            _player.Jumped -= Jump;
+            _player.Attacked -= Attack;
+            _player.Died -= Death;
         }
 
         private void TakeHit()

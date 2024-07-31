@@ -8,14 +8,12 @@ namespace Characters
     [RequireComponent(typeof(Inventory))]
     public class Player : Entity
     {
-        public static Player Instance { get; private set; }
+        private const string CommandHorizontal = "Horizontal";
+        private const string CommandJump = "Jump";
 
         [SerializeField] private float _moveSpeed = 3f;
         [SerializeField] private float _jumpForce = 11.2f;
         [SerializeField] private Vampiric _vamiricAbility;
-
-        private const string CommandHorizontal = "Horizontal";
-        private const string CommandJump = "Jump";
 
         public event Action Jumped;
         public event Action Attacked;
@@ -30,7 +28,7 @@ namespace Characters
 
         private void Awake()
         {
-            Instance = this;
+            //Instance = this;
             _rigidBody = GetComponent<Rigidbody2D>();
             _inventory = GetComponent<Inventory>();
 
@@ -62,7 +60,7 @@ namespace Characters
                 if (Input.GetKeyDown(KeyCode.Y))
                     _vamiricAbility.ActivationAbility();
 
-                Debug.Log(_inventory.CoinCount);
+                //Debug.Log(_inventory.CoinCount);
             }
         }
 
