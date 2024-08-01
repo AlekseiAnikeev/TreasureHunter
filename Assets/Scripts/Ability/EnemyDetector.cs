@@ -4,11 +4,16 @@ using UnityEngine;
 
 namespace Ability
 {
-    public class EnemyDetected : MonoBehaviour
+    public class EnemyDetector : MonoBehaviour
     {
         private List<Entity> _enemy = new();
 
-        public List<Entity> Enemy => _enemy.ToList();
+        public Entity FindClosestEnemy()
+        {
+            return _enemy.Count > 0
+                ? _enemy.OrderBy(enemy => (enemy.transform.position - transform.position).sqrMagnitude).First()
+                : null;
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
 
     public event Action<float> ValueChanged;
     public float MaxHealth => _maxHealth;
+    public float CurrentHealth => _currentHealth;
 
     private void Start()
     {

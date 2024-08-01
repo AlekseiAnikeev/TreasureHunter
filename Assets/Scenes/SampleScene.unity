@@ -304,7 +304,7 @@ MonoBehaviour:
   _healthRate: 15
   _abilityDuration: 20
   _cooldownDuration: 4
-  _enemyDetected: {fileID: 381252892}
+  _enemyDetector: {fileID: 381252892}
   _player: {fileID: 636052768}
 --- !u!58 &381252894
 CircleCollider2D:
